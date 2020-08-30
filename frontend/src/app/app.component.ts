@@ -38,13 +38,7 @@ export class AppComponent {
     // setInterval(function () {  }, 3000);
   }
 
-  //// Reinicia el tiempo
-  // async ResetTimer(id) {
-  //   const dataTimerBoss = await Gettimer(id);
-  //   dataTimerBoss.timerup = dataTimerBoss.timer;
-  //   await this.service.update(dataTimerBoss);
-  //   this.arrBossData = this.service.gettimers();
-  // }
+
 
   // Enciende o apaga el timer
   async EnableDisableTimer(id) {
@@ -68,13 +62,13 @@ export class AppComponent {
   }
 
   async GetTimer(id) {
-    const result = await this.http.get(this.baseURL + '/' + id).toPromise();
+    const result = await this.http.get<any>(this.baseURL + '/' + id).toPromise();
     console.log('Gettimer result: ', result);
     return result;
   }
 
   async GetTimers() {
-    const result = await this.http.get(this.baseURL + '/').toPromise();
+    const result = await this.http.get<any>(this.baseURL + '/').toPromise();
     console.log('GetTimers result: ', result);
     this.arrBossData = result.body;
   }
