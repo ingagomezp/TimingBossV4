@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  urlApiV4: 'http://localhost:4006/api/v1/timerboss'
 };
 
 /*

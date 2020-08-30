@@ -141,16 +141,15 @@
         </div>
         <div class="col-sm-7">
           <div class="card-body">
-            <h5 class="card-title">{{boss.name}} Canal: {{boss.channel}}</h5>
-            <p>Reaparece en: <strong>{{boss.timerup}} minutos</strong> </p>
-            <a href="#" class="tbuttons btn btn-primary">
+            <h5 class="card-title" style="color: indigo;"><strong>Canal: {{boss.channel}}</strong> </h5>
+            <p *ngIf="boss.status == true">Reaparece en: <strong style="color: green;">{{boss.timerup}} minutos</strong> </p>
+            <p *ngIf="boss.status == false">Reaparece en: <strong style="color: red;">Desconocido</strong> </p>
+            <p *ngIf="boss.status == false">De clic en el boton <strong style="color: blue;">play</strong> si el boss acaba de morir.</p>
+            <a *ngIf="boss.status == false" href="#" (click)="EnableDisableTimer(boss.id)" class="tbuttons btn btn-primary">
               <fa-icon [icon]="faPlay"></fa-icon>
             </a>
-            <a href="#" class="tbuttons btn btn-danger">
+            <a *ngIf="boss.status == true" href="#" (click)="EnableDisableTimer(boss.id)" class="tbuttons btn btn-danger">
               <fa-icon [icon]="faStop"></fa-icon>
-            </a>
-            <a href="#" class="tbuttons btn btn-warning">
-              <fa-icon [icon]="faEdit"></fa-icon>
             </a>
           </div>
         </div>

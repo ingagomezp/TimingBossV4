@@ -1,139 +1,84 @@
 import { Component } from '@angular/core';
 import { faPlay, faEdit, faStop } from '@fortawesome/free-solid-svg-icons';
+import { HttpClient, HttpResponse, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
+import { interval, Subscription } from 'rxjs';
+import { environment } from './../environments/environment';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  mySub: Subscription;
   title = 'V4';
+  // 45.132.242.135
+  baseURL = environment.urlApiV4;
   faPlay = faPlay;
   faEdit = faEdit;
   faStop = faStop;
 
+  arrBossData = [];
 
-  arrBossData = [
-    {
-      id: 0,
-      name: 'Illusory Blighted Evelyn',
-      channel: 0,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/IllusoryBlightedEvelyn.png'
-    },
-    {
-      id: 1,
-      name: 'Illusory Seasoned Evelyn',
-      channel: 0,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/IllusorySeasonedEvelyn.png'
-    },
-    {
-      id: 2,
-      name: 'Illusory Tormented Evelyn',
-      channel: 0,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/IllusoryTormentedEvelyn.png'
-    },
-    {
-      id: 3,
-      name: 'Lavirin',
-      channel: 1,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/Lavirin.png'
-    },
-    {
-      id: 4,
-      name: 'Lavirin',
-      channel: 2,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/Lavirin.png'
-    },
-    {
-      id: 5,
-      name: 'Lavirin',
-      channel: 3,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/Lavirin.png'
-    },
-    {
-      id: 6,
-      name: 'Piko',
-      channel: 1,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/Piko.png'
-    },
-    {
-      id: 7,
-      name: 'Piko',
-      channel: 2,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/Piko.png'
-    },
-    {
-      id: 8,
-      name: 'Piko',
-      channel: 3,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/Piko.png'
-    },
-    {
-      id: 7,
-      name: 'Veriki',
-      channel: 1,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/Veriki.png'
-    },
-    {
-      id: 8,
-      name: 'Veriki',
-      channel: 2,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/Veriki.png'
-    },
-    {
-      id: 9,
-      name: 'Veriki',
-      channel: 3,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/Veriki.png'
-    },
-    {
-      id: 10,
-      name: 'Rapakos',
-      channel: 1,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/Rapakos.png'
-    },
-    {
-      id: 11,
-      name: 'Rapakos',
-      channel: 2,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/Rapakos.png'
-    },
-    {
-      id: 12,
-      name: 'Rapakos',
-      channel: 3,
-      timer: 240,
-      timerup: 58,
-      img: 'assets/img/Rapakos.png'
-    },
-  ]
+  constructor(private http: HttpClient) { }
+
+  ngOnInit() {
+    this.GetTimers();
+    // Se actualiza cada 60 segundos
+    this.mySub = interval(60000).subscribe(() => {
+      console.log("Obtiene nuevamente la data de los boss.");
+      this.GetTimers();
+    });
+    // setInterval(function () {  }, 3000);
+  }
+
+  //// Reinicia el tiempo
+  // async ResetTimer(id) {
+  //   const dataTimerBoss = await Gettimer(id);
+  //   dataTimerBoss.timerup = dataTimerBoss.timer;
+  //   await this.service.update(dataTimerBoss);
+  //   this.arrBossData = this.service.gettimers();
+  // }
+
+  // Enciende o apaga el timer
+  async EnableDisableTimer(id) {
+    const dataTimerBoss = await this.GetTimer(id);
+
+    if (dataTimerBoss.body.status) {
+      dataTimerBoss.body.timerup = null;
+      dataTimerBoss.body.status = false;
+    } else {
+      dataTimerBoss.body.status = true;
+      dataTimerBoss.body.timerup = dataTimerBoss.body.timer;
+    }
+    const resultUpdate = await this.UpdateTimer(dataTimerBoss.body);
+    this.GetTimers();
+  }
+
+  async UpdateTimer(entity) {
+    const result = await this.http.put(this.baseURL + '/' + entity.id, { ...entity }, httpOptions).toPromise();
+    console.log('UpdateTimer result: ', result);
+    return result;
+  }
+
+  async GetTimer(id) {
+    const result = await this.http.get(this.baseURL + '/' + id).toPromise();
+    console.log('Gettimer result: ', result);
+    return result;
+  }
+
+  async GetTimers() {
+    const result = await this.http.get(this.baseURL + '/').toPromise();
+    console.log('GetTimers result: ', result);
+    this.arrBossData = result.body;
+  }
+
 }
 
 
