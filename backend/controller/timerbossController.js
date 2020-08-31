@@ -70,6 +70,9 @@ module.exports.timing = async (req, res) => {
             console.log(element);
             if (element.status) {
                 element.timerup = element.timerup - 1;
+                if (element.timerup <= 0) {
+                    element.timerup = element.timer;
+                }
                 await TimerBossService.update({ id: element.id, entity: { ...element } });
             }
         });
