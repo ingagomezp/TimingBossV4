@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const { timerbossModel } = require('./models/PgModel');
 
-const connectionString = `postgresql://v4pglt:latinos2020@45.132.242.135:5432/v4`;
+const connectionString = `postgresql://user:password@45.132.242.135:5432/v4`;
 
 const sequelize = new Sequelize(connectionString, {
     define: {
