@@ -10,7 +10,7 @@ const httpOptions = {
     })
 };
 
-@Component({ selector: 'app-timer', templateUrl: 'timer.component.html' })
+@Component({ templateUrl: 'timer.component.html' })
 export class TimerComponent implements OnInit {
     mySub: Subscription;
     title = 'V4';
