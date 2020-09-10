@@ -31,7 +31,6 @@ export class AuthGuard implements CanActivate {
 
         if (codeInDB == codeLocal) {
             // authorised so return true
-            this.router.navigate(['/timer/v1'], { queryParams: { returnUrl: state.url } });
             return true;
         }
         console.log(false);
