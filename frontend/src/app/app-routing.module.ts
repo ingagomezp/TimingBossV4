@@ -12,9 +12,13 @@ const routes: Routes = [
   {
     path: '',
     component: AppComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'timer',
+    component: AppComponent,
     children: [
-      { path: '', component: AppComponent, canActivate: [AuthGuard] },
-      { path: 'timer', component: TimerComponent, canActivate: [AuthGuard] }
+      { path: 'v4', component: TimerComponent }
     ],
     canActivate: [AuthGuard]
   },
