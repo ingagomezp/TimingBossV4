@@ -6,10 +6,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TimerComponent } from './timer/timer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
   {
     path: 'timer',
+    component: AppComponent,
     children: [
       { path: 'v1', component: TimerComponent, canActivate: [AuthGuard] }
     ],
@@ -17,6 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'account',
+    component: AppComponent,
     children: [
       { path: 'login', component: LoginComponent }
     ]
@@ -25,6 +28,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
+    AppComponent,
     LoginComponent,
     TimerComponent
   ],
