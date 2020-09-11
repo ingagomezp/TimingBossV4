@@ -145,12 +145,18 @@
                         <p *ngIf="boss.status == true">Reaparece en: <strong style="color: green;">{{boss.timerup}} minutos</strong> </p>
                         <p *ngIf="boss.status == false">Reaparece en: <strong style="color: red;">Desconocido</strong> </p>
                         <p *ngIf="boss.status == false">De clic en el boton <strong style="color: blue;">play</strong> si el boss acaba de morir.</p>
-                        <a *ngIf="boss.status == false" href="#" (click)="EnableDisableTimer(boss.id)" class="tbuttons btn btn-primary">
+                        <button *ngIf="boss.status == false" type="button" (click)="EnableDisableTimer(boss.id)" class="btn btn-primary">
                             <fa-icon [icon]="faPlay"></fa-icon>
-                        </a>
-                        <a *ngIf="boss.status == true" href="#" (click)="EnableDisableTimer(boss.id)" class="tbuttons btn btn-danger">
+                        </button>
+                        <!-- <a *ngIf="boss.status == false" href="#" (click)="EnableDisableTimer(boss.id)" class="tbuttons btn btn-primary">
+                            <fa-icon [icon]="faPlay"></fa-icon>
+                        </a> -->
+                        <button *ngIf="boss.status == true" type="button" (click)="EnableDisableTimer(boss.id)" class="btn btn-primary">
+                            <fa-icon [icon]="faPlay"></fa-icon>
+                        </button>
+                        <!-- <a *ngIf="boss.status == true" href="#" (click)="EnableDisableTimer(boss.id)" class="tbuttons btn btn-danger">
                             <fa-icon [icon]="faStop"></fa-icon>
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>
