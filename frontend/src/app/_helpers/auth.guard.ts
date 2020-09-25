@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
             this.router.navigate(['/account/login'], { queryParams: { returnUrl: state.url } });
             return false;
         }
-        const codeInDB = '3529';// await this.http.get<any>(this.baseURL + '/validatecode/' + codeLocal, httpOptions).toPromise();
+        const codeInDB = '3539';// await this.http.get<any>(this.baseURL + '/validatecode/' + codeLocal, httpOptions).toPromise();
         console.log('codeInDB result: ', codeInDB);
 
         if (codeInDB == codeLocal) {
